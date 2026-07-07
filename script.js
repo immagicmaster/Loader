@@ -3,117 +3,103 @@ const menuToggle = document.getElementById('menu-toggle');
 const menu = document.getElementById('menu');
 
 menuToggle.addEventListener('click', (e) => {
-    e.stopPropagation();
-    menu.classList.toggle('active');
+  e.stopPropagation();
+  menu.classList.toggle('active');
 });
 
-// Đóng menu khi click bên ngoài
 document.addEventListener('click', (e) => {
-    if (!menu.contains(e.target) && !menuToggle.contains(e.target)) {
-        menu.classList.remove('active');
-    }
+  if (!menu.contains(e.target) && !menuToggle.contains(e.target)) {
+    menu.classList.remove('active');
+  }
 });
 
-// Đóng menu khi click một liên kết
 document.querySelectorAll('#menu a').forEach((link) => {
-    link.addEventListener('click', () => {
-        menu.classList.remove('active');
-    });
+  link.addEventListener('click', () => {
+    menu.classList.remove('active');
+  });
 });
 
 // ===== NÚT GET SCRIPT → CUỘN XUỐNG =====
 document.getElementById('get-script-btn').addEventListener('click', () => {
-    document.getElementById('get-script').scrollIntoView({ behavior: 'smooth' });
+  document.getElementById('get-script').scrollIntoView({ behavior: 'smooth' });
 });
 
 // ===== JOIN DISCORD → COPY LINK =====
 document.getElementById('join-discord-btn').addEventListener('click', () => {
-    const discordLink = 'https://discord.gg/3Vdavc4c6d';
-    navigator.clipboard
-        .writeText(discordLink)
-        .then(() => {
-            alert('✅ Đã sao chép link Discord:\n' + discordLink);
-        })
-        .catch(() => {
-            // Phương thức dự phòng
-            const input = document.createElement('input');
-            input.value = discordLink;
-            document.body.appendChild(input);
-            input.select();
-            document.execCommand('copy');
-            document.body.removeChild(input);
-            alert('✅ Đã sao chép link Discord:\n' + discordLink);
-        });
+  const discordLink = 'https://discord.gg/3Vdavc4c6d';
+  navigator.clipboard
+    .writeText(discordLink)
+    .then(() => alert('✅ Đã sao chép link Discord:\n' + discordLink))
+    .catch(() => {
+      const input = document.createElement('input');
+      input.value = discordLink;
+      document.body.appendChild(input);
+      input.select();
+      document.execCommand('copy');
+      document.body.removeChild(input);
+      alert('✅ Đã sao chép link Discord:\n' + discordLink);
+    });
 });
 
 // ===== MAIN / FARM → HIỂN THỊ LINK =====
 const linkDisplay = document.getElementById('link-display');
-const magicLink = 'https://immagicmaster.github.io/MagicMaster/';
+const mainLink = 'https://immagicmaster.github.io/MagicMaster/';
+const farmLink = 'https://obfuscatorhub.onrender.com/';
 
-function showLink() {
-    linkDisplay.innerHTML = `<a href="${magicLink}" target="_blank">${magicLink}</a>`;
+function showLink(url) {
+  linkDisplay.innerHTML = `<a href="${url}" target="_blank">${url}</a>`;
+  // Thêm class 'show' để kích hoạt animation fade + scale
+  linkDisplay.classList.add('show');
 }
 
-document.getElementById('main-btn').addEventListener('click', showLink);
-document.getElementById('farm-btn').addEventListener('click', showLink);
+document.getElementById('main-btn').addEventListener('click', () => {
+  showLink(mainLink);
+});
 
-// ===== NHẠC NỀN =====
+document.getElementById('farm-btn').addEventListener('click', () => {
+  showLink(farmLink);
+});
+
+// ===== NHẠC TỰ ĐỘNG PHÁT (không có nút) =====
 const audio = document.getElementById('bg-music');
-const musicBtn = document.getElementById('music-toggle');
-let isPlaying = false;
 
-musicBtn.addEventListener('click', () => {
-    if (isPlaying) {
-        audio.pause();
-        musicBtn.textContent = '🔊 Play Music';
-        isPlaying = false;
-    } else {
-        audio.play()
-            .then(() => {
-                musicBtn.textContent = '🔊 Pause Music';
-                isPlaying = true;
-            })
-            .catch((err) => {
-                console.warn('Không thể phát nhạc tự động:', err);
-                alert('Vui lòng click vào trang để phát nhạc!');
-            });
-    }
-});
+function playMusic() {
+  audio.play().catch(() => {
+    // Nếu bị chặn, thử phát khi người dùng click bất kỳ đâu
+    document.addEventListener('click', function playOnClick() {
+      audio.play();
+      document.removeEventListener('click', playOnClick);
+    }, { once: true });
+  });
+}
 
-// Thử phát nhạc khi tải trang (nếu trình duyệt cho phép)
-window.addEventListener('load', () => {
-    audio.play()
-        .then(() => {
-            musicBtn.textContent = '🔊 Pause Music';
-            isPlaying = true;
-        })
-        .catch(() => {
-            // Không autoplay, giữ nguyên nút
-        });
-});
+// Cố gắng phát khi trang tải
+window.addEventListener('load', playMusic);
 
-// ===== HIỆU ỨNG ANIMATION KHI CUỘN (tuỳ chọn) =====
-// Thêm class 'visible' cho các phần tử khi xuất hiện trong viewport
+// Dự phòng: thử lại sau 1s nếu chưa phát
+setTimeout(playMusic, 1000);
+
+// ===== HIỆU ỨNG XUẤT HIỆN KHI CUỘN =====
 const sections = document.querySelectorAll('section');
 const observer = new IntersectionObserver(
-    (entries) => {
-        entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-                entry.target.style.opacity = '1';
-                entry.target.style.transform = 'translateY(0)';
-            }
-        });
-    },
-    { threshold: 0.15 }
+  (entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.style.opacity = '1';
+        entry.target.style.transform = 'translateY(0)';
+      }
+    });
+  },
+  { threshold: 0.15 }
 );
 
 sections.forEach((section) => {
-    section.style.opacity = '0';
-    section.style.transform = 'translateY(30px)';
-    section.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-    observer.observe(section);
+  section.style.opacity = '0';
+  section.style.transform = 'translateY(30px)';
+  section.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+  observer.observe(section);
 });
 
-// Vì home đã hiển thị sẵn, ta kích hoạt ngay cho home
+// Home hiển thị ngay lập tức
 document.getElementById('home').style.opacity = '1';
 document.getElementById('home').style.transform = 'translateY(0)';
