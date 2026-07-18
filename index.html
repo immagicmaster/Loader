@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MagicHub V1 - Roblox Script</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Audio Background -->
+    <audio id="bgMusic" loop>
+        <source src="https://github.com/immagicmaster/MagicMaster/raw/refs/heads/main/Music.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="nav-brand">
+            <img src="https://raw.githubusercontent.com/immagicmaster/MagicMaster/refs/heads/main/1782155766641.png" alt="Logo" class="nav-logo">
+            <span class="nav-title">MagicHub V1</span>
+        </div>
+        <button class="menu-toggle" id="menuToggle" aria-label="Menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+    </nav>
+
+    <!-- Mobile Menu Overlay -->
+    <div class="menu-overlay" id="menuOverlay">
+        <div class="menu-panel">
+            <button class="menu-close" id="menuClose" aria-label="Close menu">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="menu-brand">
+                <img src="https://raw.githubusercontent.com/immagicmaster/MagicMaster/refs/heads/main/1782155766641.png" alt="Logo" class="menu-logo">
+                <span>MagicHub V1</span>
+            </div>
+            <ul class="menu-list">
+                <li><a href="#home" class="menu-link" data-target="home">Home</a></li>
+                <li><a href="#script-section" class="menu-link" data-target="script-section">Get Script</a></li>
+                <li><a href="#supported" class="menu-link" data-target="supported">Supported Games</a></li>
+                <li><a href="#developer" class="menu-link" data-target="developer">Developer</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1 class="hero-title">
+                <span class="title-main">The Best</span>
+                <span class="title-highlight">Roblox Script</span>
+                <span class="title-sub">Tower Defense</span>
+            </h1>
+            <div class="hero-buttons">
+                <a href="#script-section" class="btn btn-primary" id="btnGetScript">
+                    <i class="fas fa-code"></i> Get Script
+                </a>
+                <button class="btn btn-secondary" id="btnDiscord">
+                    <i class="fab fa-discord"></i> Join Discord
+                </button>
+            </div>
+        </div>
+        <div class="hero-particles" id="particles"></div>
+    </section>
+
+    <!-- Script Section -->
+    <section class="script-section" id="script-section">
+        <div class="container">
+            <h2 class="section-title">
+                Copy Our <span class="text-gold">Script</span>
+            </h2>
+
+            <div class="script-card">
+                <div class="script-tabs">
+                    <button class="tab-btn active" data-tab="main">
+                        <i class="fas fa-cube"></i> Main
+                    </button>
+                    <button class="tab-btn" data-tab="farm">
+                        <i class="fas fa-seedling"></i> Farm
+                    </button>
+                </div>
+
+                <div class="script-display">
+                    <div class="script-content active" id="tab-main">
+                        <code>loadstring(game:HttpGet("https://immagicmaster.github.io/MagicMaster/"))()</code>
+                    </div>
+                    <div class="script-content" id="tab-farm">
+                        <code>loadstring(game:HttpGet("https://immagicmaster.github.io/MagicMaster/"))()</code>
+                    </div>
+                </div>
+
+                <button class="btn-copy" id="btnCopyScript">
+                    <i class="fas fa-copy"></i> Copy Script
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Supported Games Section -->
+    <section class="supported-section" id="supported">
+        <div class="container">
+            <h2 class="section-title">Supported</h2>
+            <div class="games-card">
+                <div class="game-item">
+                    <span class="game-name">Titan Tower Defense</span>
+                    <span class="game-check"><i class="fas fa-check-circle"></i></span>
+                </div>
+                <div class="game-item">
+                    <span class="game-name">Skibidi Master TD</span>
+                    <span class="game-check"><i class="fas fa-check-circle"></i></span>
+                </div>
+                <div class="game-item">
+                    <span class="game-name">Toilet Tower Defense (Legacy)</span>
+                    <span class="game-check"><i class="fas fa-check-circle"></i></span>
+                </div>
+                <div class="game-item">
+                    <span class="game-name">ObfuscatorM</span>
+                    <span class="game-check"><i class="fas fa-check-circle"></i></span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Developer Section -->
+    <section class="developer-section" id="developer">
+        <div class="container">
+            <h2 class="section-title">
+                <span class="text-gold">Developer</span>
+            </h2>
+            <div class="dev-card">
+                <div class="dev-avatar">
+                    <img src="https://raw.githubusercontent.com/immagicmaster/MagicMaster/refs/heads/main/1782155766641.png" alt="Magic_Master Avatar">
+                </div>
+                <h3 class="dev-name">Magic_Master</h3>
+                <div class="dev-role">
+                    <span class="role-badge">Role: Owner <i class="fas fa-crown"></i></span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast">
+        <i class="fas fa-check-circle"></i>
+        <span id="toastMessage">Copied!</span>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
