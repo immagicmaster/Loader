@@ -235,7 +235,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Copy Discord
     btnDiscord.addEventListener('click', () => {
-        copyToClipboard('https://discord.gg/3Vdavc4c6d', 'Discord link copied!');
+        copyToClipboard('dsc.gg/magichubv1', 'Discord link copied!');
     });
 
     /* ============================================
